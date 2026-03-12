@@ -2,7 +2,7 @@
 
 **Course:** CS-AI-2025 — Building AI-Powered Applications | Spring 2026  
 **Type:** Individual (you must complete this alone)  
-**Due:** Before your Lab 2 session — Friday 13 March 2026 (Group A: 09:00 | Group B: 11:00)  
+**Due:** Before your Lab 2 session — Friday 20 March 2026 (Group A: 09:00 | Group B: 11:00)  
 **Weight:** 5 participation points  
 **Submission:** Via course LMS — submit a link to your personal GitHub repository  
 **Late policy:** 10% deducted per day. No submissions accepted after Sunday 15 March 2026 at 23:59.
