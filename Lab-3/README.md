@@ -54,7 +54,7 @@ This is the structure you began setting up in Lab 2. Today you are adding `TEAM-
 ├── .env.example                       ← Variable names with placeholder values, no real keys
 ├── AGENTS.md                          ← Optional but encouraged
 │
-├── frontend/                          ← Scaffold from Lab 2 Builder Sprint
+├── frontend/                          ← To be added
 │   └── [scaffold files]
 │
 ├── backend/                           ← Or api/, server/
