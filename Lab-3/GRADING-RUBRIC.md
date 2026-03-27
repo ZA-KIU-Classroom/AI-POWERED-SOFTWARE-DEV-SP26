@@ -1,6 +1,6 @@
 # Lab 3 Grading Rubric
 
-**Course:** CS-AI-2025 Spring 2026 | **Lab:** 3 | **Date:** Friday 27 March 2026
+**Course:** CS-AI-2026 Spring 2026 | **Lab:** 3 | **Date:** Friday 27 March 2026
 
 ---
 
@@ -35,7 +35,7 @@ The grader navigates this tree directly. Files in the wrong location or with wro
 ├── .env.example
 ├── AGENTS.md                          ← Optional
 │
-├── frontend/                          ← Lab 2 Builder Sprint scaffold
+├── frontend/                          ← Scaffolding added at a later date
 │   └── [scaffold files]
 │
 ├── backend/
