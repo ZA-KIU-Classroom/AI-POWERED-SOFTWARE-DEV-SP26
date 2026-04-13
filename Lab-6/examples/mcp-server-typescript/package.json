@@ -1,0 +1,21 @@
+{
+  "name": "capstone-mcp-server",
+  "version": "1.0.0",
+  "description": "MCP server exposing capstone tools — CS-AI-2025 Lab 6",
+  "type": "module",
+  "main": "dist/server.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "dev":   "ts-node --esm src/server.ts"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "typescript":  "^5.6.0",
+    "@types/node": "^22.0.0",
+    "ts-node":     "^10.9.0"
+  }
+}
