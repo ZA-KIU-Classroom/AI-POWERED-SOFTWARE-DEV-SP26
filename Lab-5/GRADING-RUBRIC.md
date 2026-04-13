@@ -71,8 +71,7 @@ The tag must exist and point to a commit that includes the design decisions docu
 
 ### Check 5: Individual Wrap-up Form
 
-**Submitted via:** Course LMS
-**Required from:** Every team member individually
+**Required from:** Every team member individually for Capstone Checkpoint #2
 **Inspected for:** Completion — not content quality. Every field answered.
 
 ---
