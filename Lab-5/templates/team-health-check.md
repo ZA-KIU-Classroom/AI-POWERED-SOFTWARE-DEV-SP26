@@ -109,4 +109,4 @@ Answer honestly. These responses are anonymous and used only to identify teams t
 
 ---
 
-*Submitting this form takes under 3 minutes. It directly informs how the instructor supports your team. Please be honest.*
+Keep this form for your individual submission for upcoming checkpoint. It directly informs how the instructor supports your team. Please be honest.*
