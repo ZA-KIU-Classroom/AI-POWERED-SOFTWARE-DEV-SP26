@@ -1,0 +1,15 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "lab7-langgraph-starter"
+version = "0.1.0"
+description = "Minimal LangGraph starter for CS-AI-2025 Lab 7"
+requires-python = ">=3.10"
+dependencies = [
+  "langgraph>=0.2.0",
+]
+
+[tool.setuptools]
+py-modules = ["state", "nodes", "graph", "main"]
