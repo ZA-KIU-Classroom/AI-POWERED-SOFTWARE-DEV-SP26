@@ -1,0 +1,90 @@
+# .github/workflows/ci.yml
+# Copy this file to .github/workflows/ci.yml in your capstone repo.
+# Update the two paths marked UPDATE ME before pushing.
+
+name: AI App CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test-and-evaluate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Cache pip dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install dependencies
+        # UPDATE ME: adjust path if your requirements.txt is not in backend/
+        run: pip install -r backend/requirements.txt
+
+      - name: Run unit tests
+        # This step is skipped if you have no tests yet — remove the || true once you add tests
+        run: pytest backend/tests/ -v || true
+
+      - name: Run golden set evaluation
+        env:
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
+        # UPDATE ME: adjust path if your golden set script lives elsewhere
+        run: |
+          python eval/run_golden_set.py \
+            --output eval/results/ci-run.json
+
+      - name: Check golden set threshold
+        run: |
+          python - << 'PYEOF'
+          import json, sys, os
+
+          results_path = "eval/results/ci-run.json"
+
+          if not os.path.exists(results_path):
+              print("ERROR: results file not found at " + results_path)
+              print("The golden set script must write output to this path.")
+              sys.exit(1)
+
+          with open(results_path) as f:
+              results = json.load(f)
+
+          score = results.get("score", 0)
+          passed = results.get("passed", 0)
+          total = results.get("total", 0)
+
+          print("Golden set results:")
+          print("  Passed: " + str(passed) + " / " + str(total))
+          print("  Score:  " + str(round(score * 100)) + "%")
+          print("  Threshold: 70%")
+
+          if score < 0.70:
+              print("")
+              print("FAIL: score is below the 0.70 threshold.")
+              print("Review eval/results/ci-run.json to see which questions failed.")
+              sys.exit(1)
+
+          print("")
+          print("PASS: score meets the threshold.")
+          PYEOF
+
+      - name: Upload evaluation results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: golden-set-results-${{ github.sha }}
+          path: eval/results/ci-run.json
+          retention-days: 30
