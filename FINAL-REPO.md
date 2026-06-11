@@ -21,6 +21,34 @@ Fail any one of these and your Repository Review score is capped. Check these fi
 
 ---
 
+## Git Tags — Push All Four Before Freeze
+
+All four tags must be pushed to your remote before Wednesday 23:59. Run `git tag` locally and compare against this list. Missing tags cannot be added after the freeze.
+
+```bash
+# Verify which tags you have pushed
+git ls-remote --tags origin
+
+# Push any missing tags
+git tag lab9-hardening       # if not already tagged
+git tag lab10-production     # if not already tagged
+git tag lab11-portability    # if not already tagged
+git tag lab12-demo-day       # tag your final state before freeze
+
+git push origin --tags
+```
+
+| Tag | Lab | What it marks |
+|---|---|---|
+| `lab9-hardening` | Lab 9 | Golden set written, eval harness running, safety audit evidence committed |
+| `lab10-production` | Lab 10 | Dockerfile, CI, `/health`, rate limiter, fallback chain all in place |
+| `lab11-portability` | Lab 11 | Model comparison committed, fallback chain using `.env` model names, portability complete |
+| `lab12-demo-day` | Lab 12 | Final freeze state: videos embedded, case study written, all docs complete |
+
+> A tag points to a specific commit. If you tag and then keep committing, the tag does not move. Tag last, after everything else is done.
+
+---
+
 ## High Priority — Post-Safety-Audit Work (Labs 9 to 12)
 
 This section covers the majority of the remaining points. Work through it in order.
@@ -74,8 +102,55 @@ This section covers the majority of the remaining points. Work through it in ord
 - [ ] `docs/metrics-report.md` — 6 metrics from the episode log with pass/fail thresholds defined
 - [ ] `logs/episode-log.jsonl` — 100 or more entries, full schema present, zero PII in any entry
 - [ ] `mcp-server/` — bearer token auth, Pydantic validation, structured logging, sanitised error responses
-- [ ] All lab git tags pushed: `lab8-mcp-capstone`, `lab9-hardening`, `lab10-production`, `lab11-portability`
+- [ ] All 4 lab git tags pushed (see Git Tags section above)
 - [ ] Every team member has commits spread across the full semester, not just the final week
+
+---
+
+## Expected Directory Structure
+
+Your repository should match this structure closely. Graders will look for files at these exact paths.
+
+```
+your-team-repo/
+├── README.md                          # overview, architecture, setup, eval results, cost, 2-min video
+├── AGENTS.md                          # AI coding agent guide — how to work in this repo
+├── TEAM-CONTRACT.md                   # signed by all members
+├── .env.example                       # all variable names, no values
+├── .gitignore                         # .env must be listed here
+├── Dockerfile                         # non-root user, HEALTHCHECK, python:3.11-slim base
+├── docker-compose.yml                 # optional but recommended
+├── .github/
+│   └── workflows/
+│       └── ci.yml                     # golden set gate at 0.70, OPENROUTER_API_KEY secret
+├── src/  (or app/)                    # your application code
+│   └── main.py  (or equivalent)
+├── eval/
+│   ├── golden_set.json                # 10 questions: 3 factual, 2 reasoning, 2 edge, 2 refusal, 1 format
+│   ├── run_golden_set.py              # runs in under 3 min, 7+ of 10 must pass
+│   ├── model-comparison.json          # 3+ models, 5+ questions each
+│   └── results/
+│       ├── run_001.json               # at least 3 separate committed run files
+│       ├── run_002.json
+│       └── run_003.json
+├── load/
+│   ├── locustfile.py                  # 50 users, 2 min run
+│   └── load-test-report.md            # real p50/p95/p99, throughput, error rate
+├── logs/
+│   └── episode-log.jsonl              # 100+ entries, full schema, zero PII
+├── mcp-server/                        # bearer token auth, Pydantic validation, sanitised errors
+├── docs/
+│   ├── safety-audit.md                # all 6 areas + Lab 12 red-team section
+│   ├── case-study.md                  # 2 to 3 pages: problem, approach, results, lessons
+│   ├── agent-architecture-lab7.md     # pattern, typed AgentState, irreversible action guards
+│   ├── optimization-report.md         # prompt caching before/after benchmark
+│   ├── data-map.md                    # what is stored, where, retention, deletion
+│   ├── metrics-report.md              # 6 metrics with pass/fail thresholds
+│   └── design-review/
+│       └── DESIGN-REVIEW.md           # no [fill in] placeholders remaining
+└── templates/
+    └── repo-review-checklist.md       # your self-assessment against this checklist
+```
 
 ---
 
@@ -91,7 +166,7 @@ Work through this in sequence. Each item closes a hard gate, earns audit points,
 6. Cut the 60-second launch video
 7. Lock the model selection table and cost numbers in `README.md`
 8. Write `docs/case-study.md`
-9. Push all lab tags
+9. Push all 4 lab tags
 10. **Freeze repo: Wednesday 10 June at 23:59**
 
 ---
@@ -103,10 +178,6 @@ Work through this in sequence. Each item closes a hard gate, earns audit points,
 | Demo Day | 15 | Videos section, 8-slide deck, real numbers from eval and load test |
 | Repository Review | 10 | Every section of this checklist |
 | **Total at stake** | **25** | |
-
-The Repository Review is scored on four equal dimensions: real user value (2.5 pts), robustness (2.5 pts), measurements (2.5 pts), and storytelling (2.5 pts). The hard gates must pass before any of these points are awarded.
-
-Full rubric: https://github.com/ZA-KIU-Classroom/AI-POWERED-SOFTWARE-DEV-SP26/blob/main/Lab-12/GRADING-RUBRIC.md
 
 ---
 
